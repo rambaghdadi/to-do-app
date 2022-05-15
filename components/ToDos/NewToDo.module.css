@@ -1,0 +1,14 @@
+.main {
+	margin-top: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1.5rem;
+	cursor: pointer;
+	width: fit-content;
+}
+
+.main p {
+	font-size: 1.4rem;
+	color: #777;
+}
