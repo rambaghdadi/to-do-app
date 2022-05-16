@@ -4,7 +4,7 @@ import { DatePicker } from "@mantine/dates"
 import { useRef, useState } from "react"
 import classes from "./NewToDoOptions.module.css"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, Timestamp } from "firebase/firestore"
 import { db } from "../../pages/api/firebase"
 
 export default function NewToDoOptions(props) {
@@ -26,24 +26,45 @@ export default function NewToDoOptions(props) {
 			description: todoDescription.current.value,
 			dueDate: todoDate.current.value,
 			project: todoProject.current.value,
+			dateAdded: Timestamp.now(),
+			completed: false,
 		})
 	}
 
 	return (
 		<div className={classes.main}>
 			<form onSubmit={formHandler}>
-				<div className={classes.options}>
+				<div className={props.border ? classes.border : ""}>
 					<div className={classes.mainOptions}>
-						<TextInput placeholder="New To-Do" ref={todoTitle} required />
-						<Textarea placeholder="Description" ref={todoDescription} />
+						<TextInput
+							variant="filled"
+							placeholder="New To-Do"
+							ref={todoTitle}
+							required
+						/>
+						<Textarea
+							placeholder="Description"
+							variant="filled"
+							ref={todoDescription}
+						/>
 					</div>
 					<div className={classes.secondaryOptions}>
-						<DatePicker placeholder="Pick date" ref={todoDate} />
-						<Select placeholder="Project" data={projects} ref={todoProject} />
+						<DatePicker
+							placeholder="Pick date"
+							variant="filled"
+							ref={todoDate}
+						/>
+						<Select
+							placeholder="Project"
+							variant="filled"
+							data={projects}
+							ref={todoProject}
+							allowDeselect
+						/>
 					</div>
 				</div>
 				<div className={classes.actions}>
-					<Button type="submit" onClick={props.addTaskBtn} color="red">
+					<Button type="submit" onClick={props.addTaskBtn} color="blue">
 						Add Task
 					</Button>
 					<Button onClick={props.cancelBtn} variant="outline" color="gray">

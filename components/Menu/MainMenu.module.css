@@ -1,7 +1,7 @@
 .backdrop {
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.511);
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -10,8 +10,8 @@
 }
 
 .menu {
-	background-color: #fafafa;
-	position: absolute;
+	background-color: var(--secondary-color);
+	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
@@ -29,6 +29,7 @@
 .mainMenu {
 	display: flex;
 	flex-direction: column;
+
 	/* gap: 0.3rem; */
 }
 
@@ -101,7 +102,6 @@
 	}
 
 	.menu {
-		background-color: #fafafa;
 		position: static;
 		overflow: hidden;
 		width: 30rem;

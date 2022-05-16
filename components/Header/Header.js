@@ -1,4 +1,4 @@
-import { Popover } from "@mantine/core"
+import { Modal, Popover } from "@mantine/core"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Home, Menu2, Plus, User, X } from "tabler-icons-react"
@@ -27,44 +27,46 @@ export default function Header(props) {
 		/>
 	)
 	return (
-		<header className={classes.header}>
-			<div className={classes.main}>
-				<div className={classes.mainOne}>{hamburgerMenu}</div>
-				<div className={classes.mainTwo}>
-					<Home
-						style={{ cursor: "pointer" }}
-						size={25}
-						strokeWidth={1}
-						color={"white"}
-						onClick={() => router.push("/")}
-					/>
+		<>
+			<Modal
+				opened={opened}
+				onClose={() => setOpened(false)}
+				title="Add a New Todo"
+			>
+				<NewToDoOptions
+					cancelBtn={() => setOpened(false)}
+					addTaskBtn={() => setOpened(false)}
+				/>
+			</Modal>
+			<header className={classes.header}>
+				<div className={classes.main}>
+					<div className={classes.mainOne}>{hamburgerMenu}</div>
+					<div className={classes.mainTwo}>
+						<Home
+							style={{ cursor: "pointer" }}
+							size={25}
+							strokeWidth={1}
+							color={"white"}
+							onClick={() => router.push("/")}
+						/>
 
-					<Popover
-						opened={opened}
-						onClose={() => setOpened(false)}
-						target={
-							<Plus
-								onClick={() => setOpened((o) => !o)}
-								size={25}
-								strokeWidth={1}
-								color={"white"}
-								style={{ cursor: "pointer" }}
-							/>
-						}
-						// width={300}
-						position="bottom"
-					>
-						<NewToDoOptions />
-					</Popover>
+						<Plus
+							onClick={() => setOpened((o) => !o)}
+							size={25}
+							strokeWidth={1}
+							color={"white"}
+							style={{ cursor: "pointer" }}
+						/>
 
-					{/* <User
+						{/* <User
 						size={25}
 						strokeWidth={1}
 						color={"white"}
 						style={{ cursor: "pointer" }}
 					/> */}
+					</div>
 				</div>
-			</div>
-		</header>
+			</header>
+		</>
 	)
 }

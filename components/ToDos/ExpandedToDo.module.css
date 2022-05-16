@@ -1,0 +1,23 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.rowOne {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.rowTwo {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+}
+
+.actions {
+	display: flex;
+	flex-direction: row;
+	gap: 1.5rem;
+}

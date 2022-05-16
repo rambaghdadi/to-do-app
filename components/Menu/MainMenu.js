@@ -24,19 +24,9 @@ export default function MainMenu(props) {
 	const todos = useFirestoreCollection("todos")
 	const router = useRouter()
 
-	// const newProjectName = useRef()
-
 	function inputHandler(e) {
 		setFormInput(e.target.value)
 	}
-
-	// async function formHandler(e) {
-	// 	console.log("form handler")
-	// 	e.preventDefault()
-	// 	const docRef = await addDoc(collection(db, "projects"), {
-	// 		name: newProjectName.current.value,
-	// 	})
-	// }
 
 	async function submitHandler() {
 		const docRef = await addDoc(collection(db, "projects"), {
@@ -51,9 +41,21 @@ export default function MainMenu(props) {
 	}
 
 	function numberOfTodos(projectName) {
-		return todos.filter((todo) => {
-			return todo.data.project.includes(projectName)
+		return todos
+			.filter((todo) => {
+				return todo.data.project.includes(projectName)
+			})
+			.filter((todo) => todo.data.completed === false).length
+	}
+
+	function numberOfTodosToday() {
+		const num = todos.filter((todo) => {
+			return (
+				new Date(todo.data.dueDate).toLocaleDateString("en-US", dateOptions) ===
+				new Date().toLocaleDateString("en-US", dateOptions)
+			)
 		}).length
+		return num
 	}
 
 	const form = (
@@ -61,14 +63,12 @@ export default function MainMenu(props) {
 			className={classes.form}
 			onSubmit={(e) => {
 				e.preventDefault()
-				console.log("ON SUBMIT")
 			}}
 		>
 			<div className={classes.options}>
 				<div className={classes.mainOptions}>
 					<TextInput
 						placeholder="Project Name"
-						// ref={newProjectName}
 						name="projectName"
 						value={formInput}
 						onChange={inputHandler}
@@ -79,7 +79,7 @@ export default function MainMenu(props) {
 			<div className={classes.actions}>
 				<Button
 					type="submit"
-					color="red"
+					color="blue"
 					onClick={() => {
 						submitHandler()
 						setOpened(false)
@@ -123,7 +123,7 @@ export default function MainMenu(props) {
 							name={"All Todos"}
 							link={"/"}
 							icon={
-								<Inbox size={20} strokeWidth={1} color={"rgb(0, 157, 255)"} />
+								<Inbox size={20} strokeWidth={2} color={"rgb(0, 157, 255)"} />
 							}
 						/>
 						<MenuItem
@@ -133,7 +133,7 @@ export default function MainMenu(props) {
 							icon={
 								<FilterOff
 									size={20}
-									strokeWidth={1}
+									strokeWidth={2}
 									color={"rgb(0, 160, 82)"}
 								/>
 							}
@@ -142,28 +142,18 @@ export default function MainMenu(props) {
 							{...props}
 							name={"Today"}
 							link={"/today"}
-							style={{ color: "#dd4b39" }}
-							num={
-								todos.filter((todo) => {
-									return (
-										new Date(todo.data.dueDate).toLocaleDateString(
-											"en-US",
-											dateOptions
-										) === new Date().toLocaleDateString("en-US", dateOptions)
-									)
-								}).length
-							}
+							style={{ color: "rgb(0, 106, 255)" }}
+							num={numberOfTodosToday() === 0 ? "" : numberOfTodosToday()}
 							icon={
 								<Calendar
 									size={20}
-									strokeWidth={1}
-									color={"rgb(162, 0, 255)"}
+									strokeWidth={2}
+									color={"rgb(225, 154, 19)"}
 								/>
 							}
 						/>
 					</div>
 					<div className={classes.secondaryMenu}>
-						{/* {form} */}
 						<div className={classes.sectionTitle}>
 							<Popover
 								opened={opened}

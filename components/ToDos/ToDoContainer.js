@@ -13,6 +13,7 @@ export default function ToDoContainer(props) {
 			{newToDo && (
 				<NewToDoOptions
 					{...props}
+					border={true}
 					cancelBtn={() => setNewToDo(false)}
 					addTaskBtn={() => {
 						setTimeout(() => {

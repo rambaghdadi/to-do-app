@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500&family=Poppins:wght@400;500;600&display=swap");
 
+:root {
+	--font-color: rgb(226, 226, 226);
+	--main-color: rgb(31, 31, 31);
+	--secondary-color: rgb(36, 36, 36);
+	--accent-color: rgb(0, 106, 255);
+	--completedTodo-color: rgba(0, 106, 255, 0.244);
+	--border-color: rgba(255, 255, 255, 0.2);
+	--border-style: 0.4px solid rgba(255, 255, 255, 0.2);
+}
+
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -16,12 +26,84 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	scroll-behavior: smooth;
-	color: #333;
+	user-select: none;
+	color: var(--font-color);
+	background-color: var(--main-color);
 }
 
 a {
 	color: inherit;
 	text-decoration: none;
+}
+
+input[type="text"],
+textarea,
+.mantine-rfbkpp,
+.mantine-1w1ukwr {
+	color: var(--font-color) !important;
+}
+
+button {
+	color: white !important;
+}
+
+.mantine-Select-wrapper.mantine-12sbrde input option {
+	color: white !important;
+}
+
+.mantine-Paper-root {
+	background-color: var(--main-color);
+	border: 1px solid rgb(42, 42, 42);
+}
+.mantine-Paper-root button:hover {
+	background-color: var(--secondary-color);
+}
+
+.mantine-Paper-root button {
+	color: blue;
+}
+
+.mantine-Textarea-input {
+	background-color: var(--secondary-color);
+}
+
+.mantine-DatePicker-input {
+	background-color: var(--secondary-color);
+	border: none;
+}
+
+.mantine-TextInput-input {
+	background-color: var(--secondary-color);
+}
+
+.mantine-Select-input {
+	background-color: var(--secondary-color);
+	border: none;
+}
+
+.mantine-Text-root {
+	color: var(--font-color);
+}
+
+.mantine-TextInput-label,
+.mantine-Textarea-label {
+	color: var(--font-color);
+}
+
+.mantine-DatePicker-dropdownWrapper button:hover {
+	background-color: var(--secondary-color);
+}
+
+.mantine-DatePicker-calendarHeaderLevel {
+	color: var(--font-color);
+}
+
+.mantine-151f46f {
+	color: var(--font-color);
+}
+
+option {
+	color: var(--font-color) !important;
 }
 
 @media (min-width: 750px) {
