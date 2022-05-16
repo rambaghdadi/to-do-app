@@ -31,9 +31,11 @@
 	background-color: var(--completedTodo-color);
 }
 
-.circle:hover,
-.circle:active {
-	background-color: var(--completedTodo-color);
+@media (hover: hover) and (pointer: fine) {
+	.circle:hover,
+	.circle:active {
+		background-color: var(--completedTodo-color);
+	}
 }
 
 .rowThree {

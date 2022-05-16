@@ -19,6 +19,7 @@
 html {
 	font-size: 62.5%;
 	position: relative;
+	background-color: var(--accent-color);
 }
 
 html,
@@ -49,9 +50,11 @@ button {
 
 .mantine-Select-wrapper.mantine-12sbrde input option {
 	color: white !important;
+	border: none;
 }
 
-.mantine-Paper-root {
+.mantine-Paper-root,
+.mantine-Popover-body {
 	background-color: var(--main-color);
 	border: 1px solid rgb(42, 42, 42);
 }
