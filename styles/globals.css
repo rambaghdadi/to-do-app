@@ -32,11 +32,6 @@ body {
 	background-color: var(--main-color);
 }
 
-a {
-	color: inherit;
-	text-decoration: none;
-}
-
 input[type="text"],
 textarea,
 .mantine-rfbkpp,
@@ -46,11 +41,6 @@ textarea,
 
 button {
 	color: white !important;
-}
-
-.mantine-Select-wrapper.mantine-12sbrde input option {
-	color: white !important;
-	border: none;
 }
 
 .mantine-Paper-root,
@@ -105,8 +95,9 @@ button {
 	color: var(--font-color);
 }
 
-option {
-	color: var(--font-color) !important;
+.mantine-Select-label {
+	color: white;
+	background-color: blue;
 }
 
 @media (min-width: 750px) {

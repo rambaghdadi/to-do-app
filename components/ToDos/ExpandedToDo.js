@@ -54,6 +54,12 @@ export default function ExpandedToDo(props) {
 						ref={todoDate}
 					/>
 					<Select
+						styles={{
+							dropdown: { color: "white" },
+							item: { color: "white" },
+							hovered: { color: "#333" },
+							selected: { color: "#333" },
+						}}
 						defaultValue={props.project}
 						placeholder={props.project ? props.project : "Select Project"}
 						data={projects}
