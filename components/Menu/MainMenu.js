@@ -12,7 +12,7 @@ import MenuItem from "./MenuItem"
 import { motion } from "framer-motion"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import { useState } from "react"
-import { Button, Popover, TextInput, Menu } from "@mantine/core"
+import { Button, Popover, TextInput, Menu, ColorInput } from "@mantine/core"
 import { db } from "../../pages/api/firebase"
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore"
 import { useRouter } from "next/router"
@@ -20,6 +20,7 @@ import { useRouter } from "next/router"
 export default function MainMenu(props) {
 	const [opened, setOpened] = useState(false)
 	const [formInput, setFormInput] = useState("")
+	const [colorValue, setColorValue] = useState("")
 	const projects = useFirestoreCollection("projects")
 	const todos = useFirestoreCollection("todos")
 	const router = useRouter()
@@ -31,6 +32,7 @@ export default function MainMenu(props) {
 	async function submitHandler() {
 		const docRef = await addDoc(collection(db, "projects"), {
 			name: formInput,
+			color: colorValue,
 		})
 	}
 
@@ -67,7 +69,30 @@ export default function MainMenu(props) {
 		>
 			<div className={classes.options}>
 				<div className={classes.mainOptions}>
+					<ColorInput
+						disallowInput
+						withPicker={false}
+						swatchesPerRow="6"
+						swatches={[
+							"#868e96",
+							"#fa5252",
+							"#e64980",
+							"#be4bdb",
+							"#7950f2",
+							"#4c6ef5",
+							"#228be6",
+							"#15aabf",
+							"#12b886",
+							"#40c057",
+							"#82c91e",
+							"#fab005",
+						]}
+						className={classes.projectColorInput}
+						value={colorValue}
+						onChange={setColorValue}
+					/>
 					<TextInput
+						className={classes.projectTitleInput}
 						placeholder="Project Name"
 						name="projectName"
 						value={formInput}
@@ -156,6 +181,8 @@ export default function MainMenu(props) {
 					<div className={classes.secondaryMenu}>
 						<div className={classes.sectionTitle}>
 							<Popover
+								closeOnClickOutside={false}
+								trapFocus={false}
 								opened={opened}
 								onClose={() => setOpened(false)}
 								target={
@@ -167,9 +194,9 @@ export default function MainMenu(props) {
 										onClick={() => setOpened((o) => !o)}
 									/>
 								}
-								// width={260}
-								position="right"
+								width={300}
 								withArrow
+								position="right"
 							>
 								{form}
 							</Popover>
@@ -189,9 +216,9 @@ export default function MainMenu(props) {
 											icon={
 												<Circle
 													size={13}
-													fill={"rgb(0, 160, 82)"}
+													fill={project.data.color}
 													strokeWidth={1}
-													color={"rgb(0, 160, 82)"}
+													color={project.data.color}
 												/>
 											}
 										>

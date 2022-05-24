@@ -1,15 +1,5 @@
 import classes from "./MenuItem.module.css"
 import { useRouter } from "next/router"
-import {
-	ArrowsLeftRight,
-	Dots,
-	MessageCircle,
-	Photo,
-	Search,
-	Settings,
-	Trash,
-} from "tabler-icons-react"
-import { Button, Divider, Menu } from "@mantine/core"
 
 export default function MenuItem(props) {
 	const router = useRouter()

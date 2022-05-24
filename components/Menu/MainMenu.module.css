@@ -51,6 +51,21 @@
 	gap: 1rem;
 }
 
+.mainOptions {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+.projectTitleInput {
+	flex: 1;
+}
+
+.projectColorInput {
+	/* flex: 0 1 auto !important; */
+	width: 35%;
+}
+
 .actions {
 	display: flex;
 	gap: 1rem;

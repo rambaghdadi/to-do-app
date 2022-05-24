@@ -12,7 +12,7 @@ export default function Project() {
 	const router = useRouter()
 	const [projectName, setProjectName] = useState(null)
 	const { projectId } = router.query
-	const toDos = useFirestoreCollection("todos")
+	const data = useFirestoreCollection("todos")
 
 	async function getProjectDetails() {
 		try {
@@ -33,32 +33,12 @@ export default function Project() {
 		getProjectDetails()
 	}, [projectId, projectName, setProjectName])
 
-	function renderToDos(completed) {
-		const todos = toDos
-			.filter((todo) => todo.data.completed === completed)
-			.filter((todo) => {
-				return todo.data.project.includes(projectName)
-			})
-			.map((todo) => {
-				return (
-					<IndividualToDo
-						key={todo.id}
-						id={todo.id}
-						title={todo.data.title}
-						dueDate={todo.data.dueDate}
-						project={todo.data.project}
-						description={todo.data.description}
-						completed={todo.data.completed}
-					/>
-				)
-			})
-		return todos
-	}
-
 	return (
-		<MainPage projectTitle={projectName}>
-			<ToDoContainer>{renderToDos(false)}</ToDoContainer>
-			<CompletedToDoContainer>{renderToDos(true)}</CompletedToDoContainer>
-		</MainPage>
+		<MainPage
+			projectTitle={projectName}
+			data={data.filter((todo) => {
+				return todo.data.project.includes(projectName)
+			})}
+		/>
 	)
 }

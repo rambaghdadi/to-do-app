@@ -1,5 +1,28 @@
 .main {
 	margin-top: 8rem;
 	margin-left: 5rem;
+	margin-right: 5rem;
 	font-weight: 700;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.main p {
+	font-size: 1.2rem;
+}
+
+.sortSection {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+
+	cursor: pointer;
+}
+
+@media (min-width: 700px) {
+	.main p {
+		font-size: 1.4rem;
+	}
 }

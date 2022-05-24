@@ -100,6 +100,11 @@ button {
 	background-color: blue;
 }
 
+.mantine-ColorInput-defaultVariant {
+	background-color: var(--secondary-color);
+	color: white;
+}
+
 @media (min-width: 750px) {
 	.main {
 		display: flex;
