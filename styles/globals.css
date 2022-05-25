@@ -1,15 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500&family=Poppins:wght@400;500;600&display=swap");
 
-:root {
-	--font-color: rgb(226, 226, 226);
-	--main-color: rgb(31, 31, 31);
-	--secondary-color: rgb(36, 36, 36);
-	--accent-color: rgb(0, 106, 255);
-	--completedTodo-color: rgba(0, 106, 255, 0.244);
-	--border-color: rgba(255, 255, 255, 0.2);
-	--border-style: 0.4px solid rgba(255, 255, 255, 0.2);
-}
-
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -19,7 +9,26 @@
 html {
 	font-size: 62.5%;
 	position: relative;
-	background-color: var(--accent-color);
+}
+
+body {
+	--font-color: rgb(28, 28, 28);
+	--main-color: rgb(255, 255, 255);
+	--secondary-color: rgb(238, 238, 238);
+	--accent-color: rgb(0, 106, 255);
+	--completedTodo-color: rgba(0, 106, 255, 0.244);
+	--border-color: rgba(57, 57, 57, 0.2);
+	--border-style: 0.4px solid rgba(49, 49, 49, 0.2);
+}
+
+body[data-theme="dark"] {
+	--font-color: rgb(226, 226, 226);
+	--main-color: rgb(31, 31, 31);
+	--secondary-color: rgb(36, 36, 36);
+	--accent-color: rgb(0, 106, 255);
+	--completedTodo-color: rgba(0, 106, 255, 0.244);
+	--border-color: rgba(255, 255, 255, 0.2);
+	--border-style: 0.4px solid rgba(255, 255, 255, 0.2);
 }
 
 html,
@@ -39,10 +48,6 @@ textarea,
 	color: var(--font-color) !important;
 }
 
-button {
-	color: white !important;
-}
-
 .mantine-Paper-root,
 .mantine-Popover-body {
 	background-color: var(--main-color);
@@ -52,47 +57,27 @@ button {
 	background-color: var(--secondary-color);
 }
 
-.mantine-Paper-root button {
-	color: blue;
-}
-
-.mantine-Textarea-input {
-	background-color: var(--secondary-color);
-}
-
-.mantine-DatePicker-input {
-	background-color: var(--secondary-color);
-	border: none;
-}
-
+.mantine-Textarea-input,
 .mantine-TextInput-input {
 	background-color: var(--secondary-color);
 }
 
+.mantine-DatePicker-input,
 .mantine-Select-input {
 	background-color: var(--secondary-color);
 	border: none;
 }
 
-.mantine-Text-root {
-	color: var(--font-color);
-}
-
 .mantine-TextInput-label,
-.mantine-Textarea-label {
+.mantine-Textarea-label,
+.mantine-Text-root,
+.mantine-DatePicker-calendarHeaderLevel,
+.mantine-151f46f {
 	color: var(--font-color);
 }
 
 .mantine-DatePicker-dropdownWrapper button:hover {
 	background-color: var(--secondary-color);
-}
-
-.mantine-DatePicker-calendarHeaderLevel {
-	color: var(--font-color);
-}
-
-.mantine-151f46f {
-	color: var(--font-color);
 }
 
 .mantine-Select-label {

@@ -55,12 +55,16 @@ export default function NewToDoOptions(props) {
 							ref={todoDate}
 						/>
 						<Select
-							styles={{
-								dropdown: { color: "white" },
-								item: { color: "white" },
-								hovered: { color: "#333" },
-								selected: { color: "#333" },
-							}}
+							styles={
+								document.body.dataset.theme === "dark"
+									? {
+											dropdown: { color: "white" },
+											item: { color: "white" },
+											hovered: { color: "#333" },
+											selected: { color: "#333" },
+									  }
+									: ""
+							}
 							placeholder="Project"
 							variant="filled"
 							data={projects}

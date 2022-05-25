@@ -6,8 +6,9 @@ import "../styles/globals.css"
 import Head from "next/head"
 
 function MyApp({ Component, pageProps }) {
-	const [width, setWidth] = useState(0) // default width, detect on server.
+	const [width, setWidth] = useState(0)
 	const [menuOpen, setMenuOpen] = useState(false)
+	const [darkTheme, setDarkTheme] = useState(false)
 
 	const handleResize = () => setWidth(window.innerWidth)
 
@@ -16,6 +17,11 @@ function MyApp({ Component, pageProps }) {
 		window.addEventListener("resize", handleResize)
 		return () => window.removeEventListener("resize", handleResize)
 	}, [handleResize])
+
+	useEffect(() => {
+		if (darkTheme) document.body.dataset.theme = "dark"
+		if (!darkTheme) document.body.dataset.theme = "light"
+	}, [darkTheme])
 
 	return (
 		<>
@@ -27,11 +33,17 @@ function MyApp({ Component, pageProps }) {
 				/>
 				<meta name="description" content="Ram's Todo App" />
 				<meta name="keywords" content="Ram, Todo, App" />
+				<meta name="theme-color" content="rgb(0, 106, 255)" />
 				<link rel="icon" href="/images/task.png" />
 
 				<title>Ram - Todo App</title>
 			</Head>
-			<Header hamburgerClick={() => setMenuOpen(!menuOpen)} opened={menuOpen} />
+			<Header
+				theme={darkTheme}
+				switchTheme={() => setDarkTheme(!darkTheme)}
+				hamburgerClick={() => setMenuOpen(!menuOpen)}
+				opened={menuOpen}
+			/>
 			<div className="main">
 				<AnimatePresence key={"menu"}>
 					{menuOpen && (

@@ -1,12 +1,28 @@
-import { Modal, Popover } from "@mantine/core"
+import { Modal } from "@mantine/core"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { Home, Menu2, Plus, User, X } from "tabler-icons-react"
+import { Home, Menu2, Moon, Plus, Sun, X } from "tabler-icons-react"
 import NewToDoOptions from "../ToDos/NewToDoOptions"
 import classes from "./Header.module.css"
 
 export default function Header(props) {
 	const [opened, setOpened] = useState(false)
+
+	const themeColorIcon = props.theme ? (
+		<Sun
+			size={25}
+			onClick={props.switchTheme}
+			strokeWidth={1}
+			color={"white"}
+		/>
+	) : (
+		<Moon
+			size={25}
+			onClick={props.switchTheme}
+			strokeWidth={1}
+			color={"white"}
+		/>
+	)
 
 	const router = useRouter()
 	const hamburgerMenu = props.opened ? (
@@ -42,6 +58,7 @@ export default function Header(props) {
 				<div className={classes.main}>
 					<div className={classes.mainOne}>{hamburgerMenu}</div>
 					<div className={classes.mainTwo}>
+						{themeColorIcon}
 						<Home
 							style={{ cursor: "pointer" }}
 							size={25}
