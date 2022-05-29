@@ -1,9 +1,10 @@
-import { Modal } from "@mantine/core"
+import { Modal, TextInput } from "@mantine/core"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { Home, Menu2, Moon, Plus, Sun, X } from "tabler-icons-react"
 import NewToDoOptions from "../ToDos/NewToDoOptions"
 import classes from "./Header.module.css"
+import SearchBar from "./SearchBar"
 
 export default function Header(props) {
 	const [opened, setOpened] = useState(false)
@@ -47,16 +48,20 @@ export default function Header(props) {
 			<Modal
 				opened={opened}
 				onClose={() => setOpened(false)}
-				title="Add a New Todo"
+				title={"Add a New Todo"}
 			>
 				<NewToDoOptions
 					cancelBtn={() => setOpened(false)}
 					addTaskBtn={() => setOpened(false)}
 				/>
 			</Modal>
+
 			<header className={classes.header}>
 				<div className={classes.main}>
-					<div className={classes.mainOne}>{hamburgerMenu}</div>
+					<div className={classes.mainOne}>
+						{hamburgerMenu}
+						<SearchBar />
+					</div>
 					<div className={classes.mainTwo}>
 						{themeColorIcon}
 						<Home
@@ -68,7 +73,9 @@ export default function Header(props) {
 						/>
 
 						<Plus
-							onClick={() => setOpened((o) => !o)}
+							onClick={() => {
+								setOpened(true)
+							}}
 							size={25}
 							strokeWidth={1}
 							color={"white"}

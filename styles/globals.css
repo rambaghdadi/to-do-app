@@ -19,6 +19,7 @@ body {
 	--completedTodo-color: rgba(0, 106, 255, 0.244);
 	--border-color: rgba(57, 57, 57, 0.2);
 	--border-style: 0.4px solid rgba(49, 49, 49, 0.2);
+	--box-shadow: 0px 10px 15px 10px rgba(0, 0, 0, 0.1);
 }
 
 body[data-theme="dark"] {
@@ -29,6 +30,7 @@ body[data-theme="dark"] {
 	--completedTodo-color: rgba(0, 106, 255, 0.244);
 	--border-color: rgba(255, 255, 255, 0.2);
 	--border-style: 0.4px solid rgba(255, 255, 255, 0.2);
+	--box-shadow: 0px 15px 30px 10px rgb(0, 0, 0);
 }
 
 html,

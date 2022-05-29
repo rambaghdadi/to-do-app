@@ -13,8 +13,6 @@ export default function ExpandedToDo(props) {
 	const todoDate = useRef()
 	const todoProject = useRef()
 
-	const theme = props.theme
-
 	const projects = useFirestoreCollection("projects").map((project) => {
 		return { value: project.data.name, label: project.data.name }
 	})

@@ -30,6 +30,7 @@ function MyApp({ Component, pageProps }) {
 					name="viewport"
 					content="width=device-width"
 					initial-scale="1.0"
+					maximum-scale="1"
 				/>
 				<meta name="description" content="Ram's Todo App" />
 				<meta name="keywords" content="Ram, Todo, App" />
