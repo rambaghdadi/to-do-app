@@ -20,7 +20,7 @@ import { useRouter } from "next/router"
 export default function MainMenu(props) {
 	const [opened, setOpened] = useState(false)
 	const [formInput, setFormInput] = useState("")
-	const [colorValue, setColorValue] = useState("")
+	const [colorValue, setColorValue] = useState("#868e96")
 	const projects = useFirestoreCollection("projects")
 	const todos = useFirestoreCollection("todos")
 	const router = useRouter()
@@ -30,6 +30,7 @@ export default function MainMenu(props) {
 	}
 
 	async function submitHandler() {
+		if (formInput === "") return
 		const docRef = await addDoc(collection(db, "projects"), {
 			name: formInput,
 			color: colorValue,

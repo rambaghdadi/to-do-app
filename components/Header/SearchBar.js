@@ -4,6 +4,8 @@ import { Search, X } from "tabler-icons-react"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import classes from "./SearchBar.module.css"
 import ExpandedToDo from "../ToDos/ExpandedToDo"
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { db } from "../../pages/api/firebase"
 
 export default function SearchBar(props) {
 	const [opened, setOpened] = useState(false)
@@ -20,6 +22,13 @@ export default function SearchBar(props) {
 	})
 
 	const data = useFirestoreCollection("todos")
+	const projectData = useFirestoreCollection("projects")
+
+	function getColor(projectName) {
+		for (let x of projectData) {
+			if (x.data.name === projectName) return x.data.color
+		}
+	}
 
 	return (
 		<>
@@ -112,9 +121,25 @@ export default function SearchBar(props) {
 								>
 									<div className={classes.searchItem}>
 										<p>{todo.data.title}</p>
-										<p style={{ fontSize: "1.2rem" }}>
-											{todo.data.project ? todo.data.project : "Unassigned"}
-										</p>
+										<div
+											style={{
+												display: "flex",
+												alignItems: "center",
+												gap: "0.5rem",
+											}}
+										>
+											<div
+												style={{
+													backgroundColor: getColor(todo.data.project),
+													width: "7px",
+													height: "7px",
+													borderRadius: "50%",
+												}}
+											/>
+											<p style={{ fontSize: "1.2rem" }}>
+												{todo.data.project ? todo.data.project : "Unassigned"}
+											</p>
+										</div>
 									</div>
 								</div>
 							))}

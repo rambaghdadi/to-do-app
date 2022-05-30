@@ -19,6 +19,14 @@ function MyApp({ Component, pageProps }) {
 	}, [handleResize])
 
 	useEffect(() => {
+		if (localStorage.getItem("theme") === "true") {
+			setDarkTheme(true)
+		} else {
+			setDarkTheme(false)
+		}
+	}, [])
+
+	useEffect(() => {
 		if (darkTheme) document.body.dataset.theme = "dark"
 		if (!darkTheme) document.body.dataset.theme = "light"
 	}, [darkTheme])
@@ -40,7 +48,10 @@ function MyApp({ Component, pageProps }) {
 			</Head>
 			<Header
 				theme={darkTheme}
-				switchTheme={() => setDarkTheme(!darkTheme)}
+				switchTheme={() => {
+					setDarkTheme(!darkTheme)
+					localStorage.setItem("theme", !darkTheme)
+				}}
 				hamburgerClick={() => setMenuOpen(!menuOpen)}
 				opened={menuOpen}
 			/>
