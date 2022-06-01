@@ -43,6 +43,13 @@ function MyApp({ Component, pageProps }) {
 				<meta name="keywords" content="Ram, Todo, App" />
 				<meta name="theme-color" content="rgb(0, 106, 255)" />
 				<link rel="icon" href="/images/task.png" />
+				<link rel="manifest" href="/manifest.json" />
+
+				<link rel="apple-touch-icon" href="/images/ios/192.png" />
+				<meta
+					name="apple-mobile-web-app-status-bar"
+					content="rgb(0, 106, 255)"
+				/>
 
 				<title>Ram - Todo App</title>
 			</Head>
