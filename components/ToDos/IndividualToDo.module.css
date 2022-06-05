@@ -3,6 +3,7 @@
 	padding: 1.5rem 0;
 	border-bottom: var(--border-style);
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .main {
@@ -13,12 +14,14 @@
 }
 
 .rowTwo {
+	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 	align-items: flex-start;
 	justify-content: center;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
+	padding-right: 2rem;
 }
 
 .circle {
