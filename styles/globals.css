@@ -56,12 +56,17 @@ body {
 	justify-content: center;
 	flex-direction: column;
 	gap: 3rem;
-	color: var(--font-color);
+	/* color: var(--font-color); */
 	font-family: Poppins;
 }
 
 .homepage h1 {
 	line-height: 1.2;
+}
+
+.homepage h1,
+.homepage p {
+	color: white !important;
 }
 
 /* MANTINE */
