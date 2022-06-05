@@ -4,13 +4,26 @@ import { useEffect, useState } from "react"
 import MainMenu from "../components/Menu/MainMenu"
 import "../styles/globals.css"
 import Head from "next/head"
+import { AuthContextProvider } from "../context/AuthContext"
+import { useRouter } from "next/router"
+import ProtectedRoute from "../components/AuthenticationComponents/ProtectedRoute"
 
 function MyApp({ Component, pageProps }) {
+	const router = useRouter()
+
 	const [width, setWidth] = useState(0)
 	const [menuOpen, setMenuOpen] = useState(false)
 	const [darkTheme, setDarkTheme] = useState(false)
+	const [path, setPath] = useState(router.asPath)
+
+	const noNavLinks = ["/", "/signup", "/signin"]
+	const noAuthRequired = ["/", "/signup", "/signin"]
 
 	const handleResize = () => setWidth(window.innerWidth)
+
+	useEffect(() => {
+		setPath(router.asPath)
+	}, [router.asPath])
 
 	useEffect(() => {
 		setWidth(window.innerWidth)
@@ -43,7 +56,7 @@ function MyApp({ Component, pageProps }) {
 				<meta name="keywords" content="Ram, Todo, App" />
 				<meta name="theme-color" content="rgb(0, 106, 255)" />
 				<link rel="icon" href="/images/task.png" />
-				<link rel="manifest" href="/manifest.json" />
+				{/* <link rel="manifest" href="/manifest.json" /> */}
 
 				<link rel="apple-touch-icon" href="/images/ios/192.png" />
 				<meta
@@ -53,33 +66,50 @@ function MyApp({ Component, pageProps }) {
 
 				<title>Ram - Todo App</title>
 			</Head>
-			<Header
-				theme={darkTheme}
-				switchTheme={() => {
-					setDarkTheme(!darkTheme)
-					localStorage.setItem("theme", !darkTheme)
-				}}
-				hamburgerClick={() => setMenuOpen(!menuOpen)}
-				opened={menuOpen}
-			/>
-			<div className="main">
-				<AnimatePresence key={"menu"}>
-					{menuOpen && (
-						<motion.div>
-							<MainMenu
-								backdropClick={() => {
-									setMenuOpen(!menuOpen)
-								}}
-								close={() => {
-									if (width > 749) return
-									setMenuOpen(!menuOpen)
-								}}
-							/>
-						</motion.div>
+			<AuthContextProvider>
+				{noAuthRequired.includes(router.pathname) ? null : (
+					<ProtectedRoute>
+						<Header
+							theme={darkTheme}
+							switchTheme={() => {
+								setDarkTheme(!darkTheme)
+								localStorage.setItem("theme", !darkTheme)
+							}}
+							hamburgerClick={() => setMenuOpen(!menuOpen)}
+							opened={menuOpen}
+						/>
+					</ProtectedRoute>
+				)}
+				<div className="main">
+					{noAuthRequired.includes(router.pathname) ? null : (
+						<ProtectedRoute>
+							<AnimatePresence key={"menu"}>
+								{menuOpen && (
+									<motion.div>
+										<MainMenu
+											backdropClick={() => {
+												setMenuOpen(!menuOpen)
+											}}
+											close={() => {
+												if (width > 749) return
+												setMenuOpen(!menuOpen)
+											}}
+										/>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</ProtectedRoute>
 					)}
-				</AnimatePresence>
-				<Component {...pageProps} />
-			</div>
+
+					{noAuthRequired.includes(router.pathname) ? (
+						<Component {...pageProps} />
+					) : (
+						<ProtectedRoute>
+							<Component {...pageProps} />
+						</ProtectedRoute>
+					)}
+				</div>
+			</AuthContextProvider>
 		</>
 	)
 }

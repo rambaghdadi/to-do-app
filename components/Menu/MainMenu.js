@@ -16,6 +16,7 @@ import { Button, Popover, TextInput, Menu, ColorInput } from "@mantine/core"
 import { db } from "../../pages/api/firebase"
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore"
 import { useRouter } from "next/router"
+import { useAuth } from "../../context/AuthContext"
 
 export default function MainMenu(props) {
 	const [opened, setOpened] = useState(false)
@@ -24,6 +25,7 @@ export default function MainMenu(props) {
 	const projects = useFirestoreCollection("projects")
 	const todos = useFirestoreCollection("todos")
 	const router = useRouter()
+	const { user } = useAuth()
 
 	function inputHandler(e) {
 		setFormInput(e.target.value)
@@ -34,6 +36,7 @@ export default function MainMenu(props) {
 		const docRef = await addDoc(collection(db, "projects"), {
 			name: formInput,
 			color: colorValue,
+			user: user.uid,
 		})
 	}
 
@@ -45,6 +48,7 @@ export default function MainMenu(props) {
 
 	function numberOfTodos(projectName) {
 		return todos
+			.filter((todo) => todo.data.user === user?.uid)
 			.filter((todo) => {
 				return todo.data.project.includes(projectName)
 			})
@@ -52,13 +56,16 @@ export default function MainMenu(props) {
 	}
 
 	function numberOfTodosToday() {
-		const num = todos.filter((todo) => {
-			return (
-				new Date(todo.data.dueDate).toLocaleDateString("en-US", dateOptions) ===
-				new Date().toLocaleDateString("en-US", dateOptions)
-			)
-		}).length
-		return num
+		return todos
+			.filter((todo) => todo.data.user === user?.uid)
+			.filter((todo) => {
+				return (
+					new Date(todo.data.dueDate).toLocaleDateString(
+						"en-US",
+						dateOptions
+					) === new Date().toLocaleDateString("en-US", dateOptions)
+				)
+			}).length
 	}
 
 	const form = (
@@ -147,7 +154,7 @@ export default function MainMenu(props) {
 						<MenuItem
 							{...props}
 							name={"All Todos"}
-							link={"/"}
+							link={"/app"}
 							icon={
 								<Inbox size={20} strokeWidth={2} color={"rgb(0, 157, 255)"} />
 							}
@@ -155,7 +162,7 @@ export default function MainMenu(props) {
 						<MenuItem
 							{...props}
 							name={"Unassigned"}
-							link={"/unassigned"}
+							link={"/app/unassigned"}
 							icon={
 								<FilterOff
 									size={20}
@@ -167,7 +174,7 @@ export default function MainMenu(props) {
 						<MenuItem
 							{...props}
 							name={"Today"}
-							link={"/today"}
+							link={"/app/today"}
 							style={{ color: "rgb(0, 106, 255)" }}
 							num={numberOfTodosToday() === 0 ? "" : numberOfTodosToday()}
 							icon={
@@ -206,60 +213,62 @@ export default function MainMenu(props) {
 						</div>
 						<div className={classes.projects}>
 							{projects &&
-								projects.map((project) => {
-									return (
-										<MenuItem
-											{...props}
-											key={project.id}
-											num={numberOfTodos(project.data.name)}
-											link={`/project/${project.id}`}
-											name={project.data.name}
-											icon={
-												<Circle
-													size={13}
-													fill={project.data.color}
-													strokeWidth={1}
-													color={project.data.color}
-												/>
-											}
-										>
-											<Menu
-												control={
-													<button
-														onClick={(e) => {
+								projects
+									.filter((project) => project.data.user === user?.uid)
+									.map((project) => {
+										return (
+											<MenuItem
+												{...props}
+												key={project.id}
+												num={numberOfTodos(project.data.name)}
+												link={`/app/project/${project.id}`}
+												name={project.data.name}
+												icon={
+													<Circle
+														size={13}
+														fill={project.data.color}
+														strokeWidth={1}
+														color={project.data.color}
+													/>
+												}
+											>
+												<Menu
+													control={
+														<button
+															onClick={(e) => {
+																e.preventDefault()
+																e.stopPropagation()
+															}}
+															className={classes.dotBtn}
+														>
+															<Dots
+																className={classes.dots}
+																size={15}
+																strokeWidth={2}
+																color={"gray"}
+															/>
+														</button>
+													}
+													className={classes.dots}
+												>
+													<Menu.Label>Options</Menu.Label>
+													<Menu.Item
+														onClick={async (e) => {
 															e.preventDefault()
 															e.stopPropagation()
+															await deleteDoc(doc(db, "projects", project.id))
+															if (router.asPath === `/project/${project.id}`)
+																router.push("/app")
 														}}
-														className={classes.dotBtn}
+														color="red"
+														icon={<Trash size={14} />}
 													>
-														<Dots
-															className={classes.dots}
-															size={15}
-															strokeWidth={2}
-															color={"gray"}
-														/>
-													</button>
-												}
-												className={classes.dots}
-											>
-												<Menu.Label>Options</Menu.Label>
-												<Menu.Item
-													onClick={async (e) => {
-														e.preventDefault()
-														e.stopPropagation()
-														await deleteDoc(doc(db, "projects", project.id))
-														if (router.asPath === `/project/${project.id}`)
-															router.push("/")
-													}}
-													color="red"
-													icon={<Trash size={14} />}
-												>
-													Delete Project
-												</Menu.Item>
-											</Menu>
-										</MenuItem>
-									)
-								})}
+														Delete Project
+													</Menu.Item>
+												</Menu>
+											</MenuItem>
+										)
+									})}
 						</div>
 					</div>
 				</div>

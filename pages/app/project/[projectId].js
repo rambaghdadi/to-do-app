@@ -1,12 +1,9 @@
 import { doc, getDoc } from "firebase/firestore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import ToDoContainer from "../../components/ToDos/ToDoContainer"
-import IndividualToDo from "../../components/ToDos/IndividualToDo"
-import useFirestoreCollection from "../../hooks/useFirestoreCollection"
-import { db } from "../api/firebase"
-import MainPage from "../../components/Main/MainPage"
-import CompletedToDoContainer from "../../components/ToDos/CompletedToDoContainer"
+import useFirestoreCollection from "../../../hooks/useFirestoreCollection"
+import { db } from "../../api/firebase"
+import MainPage from "../../../components/Main/MainPage"
 
 export default function Project() {
 	const router = useRouter()

@@ -6,16 +6,20 @@ import classes from "./NewToDoOptions.module.css"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import { addDoc, collection, Timestamp } from "firebase/firestore"
 import { db } from "../../pages/api/firebase"
+import { useAuth } from "../../context/AuthContext"
 
 export default function NewToDoOptions(props) {
+	const { user } = useAuth()
 	const todoTitle = useRef()
 	const todoDescription = useRef()
 	const todoDate = useRef()
 	const todoProject = useRef()
 
-	const projects = useFirestoreCollection("projects").map((project) => {
-		return { value: project.data.name, label: project.data.name }
-	})
+	const projects = useFirestoreCollection("projects")
+		.filter((project) => project.data.user === user.uid)
+		.map((project) => {
+			return { value: project.data.name, label: project.data.name }
+		})
 
 	async function formHandler(e) {
 		e.preventDefault()
@@ -28,6 +32,7 @@ export default function NewToDoOptions(props) {
 			project: todoProject.current.value,
 			dateAdded: Timestamp.now(),
 			completed: false,
+			user: user.uid,
 		})
 	}
 

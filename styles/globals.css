@@ -43,16 +43,43 @@ body {
 	background-color: var(--main-color);
 }
 
+.homepage {
+	padding: 0 2rem;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.192), rgba(0, 0, 0, 0.789)),
+		url("/images/homeBG.jpg");
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 3rem;
+	color: rgb(237, 237, 237);
+	font-family: Poppins;
+}
+
+.homepage h1 {
+	line-height: 1.2;
+}
+
+/* MANTINE */
+
 input,
 select,
 textarea {
 	font-size: 16px !important;
+	color: var(--font-color) !important;
 }
 
 input[type="text"],
 textarea,
+p,
+a,
 .mantine-rfbkpp,
-.mantine-1w1ukwr {
+.mantine-1w1ukwr,
+.mantine-Menu-item {
 	color: var(--font-color) !important;
 }
 
@@ -66,7 +93,9 @@ textarea,
 }
 
 .mantine-Textarea-input,
-.mantine-TextInput-input {
+.mantine-TextInput-input,
+.mantine-PasswordInput-innerInput,
+.mantine-PasswordInput-rightSection {
 	background-color: var(--secondary-color);
 }
 

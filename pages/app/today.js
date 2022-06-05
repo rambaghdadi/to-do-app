@@ -1,5 +1,5 @@
-import MainPage from "../components/Main/MainPage"
-import useFirestoreCollection from "../hooks/useFirestoreCollection"
+import MainPage from "../../components/Main/MainPage"
+import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 
 export default function Today(props) {
 	const data = useFirestoreCollection("todos")

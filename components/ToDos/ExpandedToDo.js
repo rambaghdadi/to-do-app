@@ -2,20 +2,25 @@ import { Button, Textarea, TextInput, Select } from "@mantine/core"
 import { DatePicker } from "@mantine/dates"
 import { doc, updateDoc } from "firebase/firestore"
 import { useRef } from "react"
+import { useAuth } from "../../context/AuthContext"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import { db } from "../../pages/api/firebase"
 import classes from "./ExpandedToDo.module.css"
 
 export default function ExpandedToDo(props) {
+	const { user } = useAuth()
+
 	const docRef = doc(db, "todos", props.id)
 	const todoTitle = useRef()
 	const todoDescription = useRef()
 	const todoDate = useRef()
 	const todoProject = useRef()
 
-	const projects = useFirestoreCollection("projects").map((project) => {
-		return { value: project.data.name, label: project.data.name }
-	})
+	const projects = useFirestoreCollection("projects")
+		.filter((project) => project.data.user === user.uid)
+		.map((project) => {
+			return { value: project.data.name, label: project.data.name }
+		})
 
 	async function handleForm(e) {
 		e.preventDefault()

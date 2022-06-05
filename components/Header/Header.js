@@ -1,13 +1,15 @@
-import { Modal, TextInput } from "@mantine/core"
+import { Menu, Modal } from "@mantine/core"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { Home, Menu2, Moon, Plus, Sun, X } from "tabler-icons-react"
+import { Home, Menu2, Moon, Plus, Sun, User, X } from "tabler-icons-react"
+import { useAuth } from "../../context/AuthContext"
 import NewToDoOptions from "../ToDos/NewToDoOptions"
 import classes from "./Header.module.css"
 import SearchBar from "./SearchBar"
 
 export default function Header(props) {
 	const [opened, setOpened] = useState(false)
+	const { user, signout } = useAuth()
 
 	const themeColorIcon = props.theme ? (
 		<Sun
@@ -69,7 +71,7 @@ export default function Header(props) {
 							size={25}
 							strokeWidth={1}
 							color={"white"}
-							onClick={() => router.push("/")}
+							onClick={() => router.push("/app")}
 						/>
 
 						<Plus
@@ -82,12 +84,30 @@ export default function Header(props) {
 							style={{ cursor: "pointer" }}
 						/>
 
-						{/* <User
-						size={25}
-						strokeWidth={1}
-						color={"white"}
-						style={{ cursor: "pointer" }}
-					/> */}
+						<Menu
+							control={
+								<button style={{ all: "unset" }}>
+									<User
+										type="button"
+										size={25}
+										strokeWidth={1}
+										color={"white"}
+										style={{ cursor: "pointer" }}
+									/>
+								</button>
+							}
+							className={classes.dots}
+						>
+							<Menu.Label>Hello, {user?.displayName}</Menu.Label>
+							<Menu.Item
+								onClick={() => {
+									signout()
+									router.push("/")
+								}}
+							>
+								Sign Out
+							</Menu.Item>
+						</Menu>
 					</div>
 				</div>
 			</header>

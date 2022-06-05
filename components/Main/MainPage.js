@@ -5,12 +5,14 @@ import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import IndividualToDo from "../ToDos/IndividualToDo"
 import ToDoContainer from "../ToDos/ToDoContainer"
 import CompletedToDoContainer from "../ToDos/CompletedToDoContainer"
+import { useAuth } from "../../context/AuthContext"
 
 export default function MainPage(props) {
 	const [todos, setTodos] = useState([])
 	const [ascending, setAscending] = useState(true)
 	const [completedTodos, setCompletedTodos] = useState()
 	const [uncompletedTodos, setUncompletedTodos] = useState()
+	const { user } = useAuth()
 
 	const data = props.data
 
@@ -46,6 +48,7 @@ export default function MainPage(props) {
 
 	function renderToDos(completed) {
 		return todos
+			.filter((todo) => todo.data.user === user.uid)
 			.filter((todo) => todo.data.completed === completed)
 			.map((todo) => {
 				return (

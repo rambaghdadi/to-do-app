@@ -4,10 +4,10 @@ import { Search, X } from "tabler-icons-react"
 import useFirestoreCollection from "../../hooks/useFirestoreCollection"
 import classes from "./SearchBar.module.css"
 import ExpandedToDo from "../ToDos/ExpandedToDo"
-import { collection, getDocs, query, where } from "firebase/firestore"
-import { db } from "../../pages/api/firebase"
+import { useAuth } from "../../context/AuthContext"
 
 export default function SearchBar(props) {
+	const { user } = useAuth()
 	const [opened, setOpened] = useState(false)
 	const [search, setSearch] = useState(false)
 	const [initialiseSearch, setInitialiseSearch] = useState(false)
@@ -97,6 +97,7 @@ export default function SearchBar(props) {
 				{search && (
 					<div className={classes.searchResultsContainer}>
 						{data
+							.filter((todo) => todo.data.user === user.uid)
 							.filter((todo) =>
 								todo.data.title
 									.toLowerCase()
