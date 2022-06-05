@@ -87,7 +87,8 @@ export default function Signin(props) {
 				<p
 					style={{ fontSize: "1.3rem", color: "#333", alignSelf: "flex-start" }}
 				>
-					Don't have an account? <Link href={"/signup"}>Sign up</Link> instead.
+					Don&apos;t have an account? <Link href={"/signup"}>Sign up</Link>{" "}
+					instead.
 				</p>
 				<div
 					style={{
